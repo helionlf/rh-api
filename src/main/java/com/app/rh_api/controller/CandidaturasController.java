@@ -9,6 +9,7 @@ import com.app.rh_api.security.JwtUtil;
 import com.app.rh_api.service.CandidaturaService;
 import com.app.rh_api.model.Candidatura;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("public/vagas")
 public class CandidaturasController {

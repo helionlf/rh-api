@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/rh-admin/vagas")
 public class VagasController {
