@@ -34,6 +34,9 @@ public class Vaga {
     @Column(nullable = false)
     private BigDecimal wage;
 
+    @Column(nullable = false)
+    private String emailRecrutador;
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;

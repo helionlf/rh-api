@@ -55,7 +55,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         List<GrantedAuthority> authorities = new ArrayList<>();
 
                         // 👇 define quem é admin por e-mail
-                        if (List.of("helio@gmail.com").contains(email)) {
+                        if (List.of("heliofilhofhnlf@gmail.com").contains(email)) {
                             authorities.add(new SimpleGrantedAuthority("ADMIN"));
                         } 
                                     

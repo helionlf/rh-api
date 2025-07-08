@@ -25,7 +25,7 @@ public class Usuario {
     private String firstName;
 
     @Column(nullable = false)
-    private String lestName;
+    private String lastName;
 
     @Column(nullable = false, unique = true)
     private String email;
