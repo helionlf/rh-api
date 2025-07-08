@@ -16,5 +16,6 @@
 /app/src/main/java/com/app/rh_api/security/JwtAuthFilter.java
 /app/src/main/java/com/app/rh_api/security/JwtUtil.java
 /app/src/main/java/com/app/rh_api/service/CandidaturaService.java
+/app/src/main/java/com/app/rh_api/service/EmailService.java
 /app/src/main/java/com/app/rh_api/service/UsuariosService.java
 /app/src/main/java/com/app/rh_api/service/VagasService.java
