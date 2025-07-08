@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.app.rh_api.model.Usuario;
 import com.app.rh_api.model.Vaga;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -24,6 +25,9 @@ public class CandidaturaService {
     @Autowired
     private VagasRepository vagasRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     public List<Candidatura> listarCandidaturas(String email) {
         Usuario usuario = usuariosRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -31,7 +35,7 @@ public class CandidaturaService {
         return candidaturasRepository.findByUsuarioId(usuario.getId());
     }
 
-    public Candidatura realizarCandidatura(String email, Long id_vaga) {
+    public Candidatura realizarCandidatura(String email, Long id_vaga, MultipartFile curriculo) {
         Usuario usuario = usuariosRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
@@ -46,8 +50,10 @@ public class CandidaturaService {
         Candidatura candidatura = new Candidatura();
         candidatura.setVaga(vaga);
         candidatura.setUsuario(usuario);
+        candidaturasRepository.save(candidatura);
 
-        return candidaturasRepository.save(candidatura);
+        emailService.enviarEmail(vaga, usuario, curriculo);
 
+        return candidatura;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.app.rh_api.security.JwtUtil;
 import com.app.rh_api.service.CandidaturaService;
 import com.app.rh_api.model.Candidatura;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -34,7 +35,7 @@ public class CandidaturasController {
     }
 
     @PostMapping("/{id}/candidatar")
-    public Candidatura candidatar(@PathVariable Long id, HttpServletRequest request) {
+    public Candidatura candidatar(@PathVariable Long id, @RequestParam MultipartFile curriculo, HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new RuntimeException("Token não encontrado");
@@ -43,7 +44,7 @@ public class CandidaturasController {
         String token = authHeader.substring(7);
         String email = jwtUtil.extractEmail(token);
 
-        return candidaturaService.realizarCandidatura(email, id);
+        return candidaturaService.realizarCandidatura(email, id, curriculo);
     }
 
 }
