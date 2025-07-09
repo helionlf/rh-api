@@ -38,7 +38,7 @@ public class AuthController {
         }
 
         // 👇 Define a role com base no email (ou como preferir)
-        String role = loginRequest.getEmail().equals("helio@gmail.com") ? "admin" : "user";
+        String role = loginRequest.getEmail().equals("heliofilhofhnlf@gmail.com") ? "admin" : "user";
 
         // 👇 Gera o token com a role embutida
         String token = jwtUtil.generateToken(usuario.getEmail(), role);
