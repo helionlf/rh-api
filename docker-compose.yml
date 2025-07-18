@@ -1,6 +1,7 @@
 version: "3.8"
 
 services:
+  # Banco do sistema monolítico
   db:
     image: postgres:15
     container_name: rh_postgre
@@ -12,8 +13,11 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata-mono:/var/lib/postgresql/data
+    networks:
+      - rh-network
 
+  # Aplicação monolítica
   app:
     build: .
     container_name: rh_app
@@ -30,6 +34,40 @@ services:
       - ~/.m2:/root/.m2
     working_dir: /app
     command: ["./mvnw", "spring-boot:run"]
+    networks:
+      - rh-network
+
+  # Banco do microserviço de usuários
+  usuarios-db:
+    image: postgres:15
+    container_name: usuarios_db
+    restart: always
+    environment:
+      POSTGRES_DB: db-usuarios
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-usuarios:/var/lib/postgresql/data
+    networks:
+      - rh-network
+
+  # Microserviço de usuários
+  usuarios-service:
+    build: ./usuarios-service
+    container_name: usuarios-service
+    depends_on:
+      - usuarios-db
+    ports:
+      - "8081:8081"
+    networks:
+      - rh-network
 
 volumes:
-  pgdata:
+  pgdata-mono:
+  pgdata-usuarios:
+
+networks:
+  rh-network:
+    driver: bridge
