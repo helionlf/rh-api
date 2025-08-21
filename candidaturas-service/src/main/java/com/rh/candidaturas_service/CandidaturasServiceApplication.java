@@ -1,13 +1,13 @@
-package com.example.usuarios;
+package com.rh.candidaturas_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UsuariosApplication {
+public class CandidaturasServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UsuariosApplication.class, args);
+		SpringApplication.run(CandidaturasServiceApplication.class, args);
 	}
 
 }

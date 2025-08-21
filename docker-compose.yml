@@ -53,7 +53,7 @@ services:
     networks:
       - rh-network
 
-  # Microserviço de usuários
+  # Microserviço de usuarios
   usuarios-service:
     build: ./usuarios-service
     container_name: usuarios-service
@@ -63,6 +63,73 @@ services:
       - "8081:8081"
     networks:
       - rh-network
+
+  # Banco do microserviço de vagas
+  vagas-db:
+    image: postgres:15
+    container_name: vagas_db
+    restart: always
+    environment:
+      POSTGRES_DB: db-vagas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata-vagas:/var/lib/postgresql/data
+    networks:
+      - rh-network
+
+  # Microserviço de vagas
+  vagas-service:
+    build: ./vagas-service
+    container_name: vagas-service
+    depends_on:
+      - vagas-db
+    ports:
+      - "8082:8082"
+    networks:
+      - rh-network
+  
+# Banco do microserviço de candidaturas
+  candidaturas-db:
+    image: postgres:15
+    container_name: candidaturas_db
+    restart: always
+    environment:
+      POSTGRES_DB: db-candidaturas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5435:5432"
+    volumes:
+      - pgdata-candidaturas:/var/lib/postgresql/data
+    networks:
+      - rh-network
+
+  # Microserviço de candidaturas
+  candidaturas-service:
+    build: ./candidaturas-service
+    container_name: candidaturas-service
+    depends_on:
+      - candidaturas-db
+    ports:
+      - "8083:8083"
+    networks:
+      - rh-network
+
+  # Microserviço de email
+  email-service:
+    build: ./email-service
+    container_name: email-service
+    depends_on:
+      - email-db
+    ports:
+      - "8084:8084"
+    networks:
+      - rh-network
+
+  
 
 volumes:
   pgdata-mono:
